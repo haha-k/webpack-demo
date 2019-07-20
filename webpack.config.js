@@ -1,4 +1,12 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const devMode = process.env.NODE_ENV !== 'production'
+
+
+const extractSass = new MiniCssExtractPlugin({
+            filename:devMode ? '[name].css' : '[name].[hash].css',
+            chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+});//设置生产环境css分离
 
 module.exports = {
     entry: './src/index.js',
@@ -10,8 +18,16 @@ module.exports = {
         rules: [
             {
                 test: /\.(sc|c|sa)ss$/,
-                use: [{
-                        loader: "style-loader" //将js字符串生成为style节点
+                use: [
+                    devMode ? {
+                        loader:"style-loader"
+                    }
+                    :
+                    {
+                        loader:MiniCssExtractPlugin.loader,
+                        options:{
+                            hmr:process.env.NODE_ENV === 'development',
+                        }
                     },
                     {
                         loader: "css-loader", //将css转化为CommonJs模块
@@ -39,5 +55,8 @@ module.exports = {
                 ]
             }
         ]
-    }
+    },
+    plugins:[
+        extractSass
+    ],
 }
