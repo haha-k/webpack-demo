@@ -1,7 +1,9 @@
-function component(){
-    var element = document.createElement('div')
+import _ from 'lodash';
 
-    element.innerHTML = _.join(['haha','kk'],' ')
+function component(){
+    var element = document.createElement('div');
+
+    element.innerHTML = _.join(['haha','kk'],' ');
 
     return element;
 }
