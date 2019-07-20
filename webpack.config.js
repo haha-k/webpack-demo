@@ -20,11 +20,22 @@ module.exports = {
                         }
                     },
                     {
+                         loader: "postcss-loader",
+                         options: {
+                             ident:'postcss',
+                             sourceMap:true,
+                             plugins:(loader)=>[
+                                 require('autoprefixer')({browsers:['> 0.15% in CN']}),
+                             ]
+
+                         }
+                    },
+                    {
                         loader: "sass-loader", //将sass编译成css
                         options: {
                             sourceMap:true
                         }
-                    }
+                    },
                 ]
             }
         ]
