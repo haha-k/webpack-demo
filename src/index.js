@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import './style.css'
 import './style.scss';
+import Icon from './asset/img/icon.jpg'
+
 
 function component(){
     var element = document.createElement('div');
@@ -9,6 +11,10 @@ function component(){
     element.classList.add('hello');
     element.classList.add('box');
 
+    var myIcon = new Image();
+    myIcon.src = Icon;
+
+    element.appendChild(myIcon);
 
     return element;
 }

@@ -20,7 +20,14 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     module: {
-        rules: [{
+        rules: [
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use:[
+                    'file-loader'
+                ]
+            },
+            {
             test: /\.(sc|c|sa)ss$/,
             use: [
                 devMode ? {
