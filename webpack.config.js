@@ -4,7 +4,7 @@ const devMode = process.env.NODE_ENV !== 'production';
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const extractSass = new MiniCssExtractPlugin({
     filename: devMode ? '[name].css' : '[name].[hash].css',
@@ -62,6 +62,9 @@ module.exports = {
     },
     plugins: [
         extractSass,
+        new CleanWebpackPlugin({
+            // path:[],
+        }), //默认清理output文件夹,文档用的这个插件老版本
         new HtmlWebpackPlugin({
             title: 'haha-k:Output Management',
             //  filename: 'xxx.html', //文件名
@@ -70,7 +73,6 @@ module.exports = {
             //     removeComments:true,
             // },
         }),//生成html的插件
-
     ],
     optimization: {
         minimizer: [
