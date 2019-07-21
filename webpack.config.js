@@ -4,7 +4,9 @@ const devMode = process.env.NODE_ENV !== 'production';
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const {
+    CleanWebpackPlugin
+} = require('clean-webpack-plugin');
 
 const extractSass = new MiniCssExtractPlugin({
     filename: devMode ? '[name].css' : '[name].[hash].css',
@@ -20,52 +22,74 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.(png|svg|jpg|gif)$/,
-                use:[
-                    'file-loader'
+                use: [
+                    'file-loader',//加载图片资源
+                    {
+                        loader: 'image-webpack-loader', //对图片进行压缩
+                        options: {
+                            mozjpeg: {
+                                progressive: true,
+                                quality: 65
+                            },
+                            optipng: {
+                                enabled: false,
+                            },
+                            pngquant: {
+                                quality: '65-90',
+                                speed: 4
+                            },
+                            gifsicle: {
+                                interlaced: false,
+                            },
+                            // the webp option will enable WEBP
+                            webp: {
+                                quality: 75
+                            }
+                        }
+                    }
                 ]
             },
             {
-            test: /\.(sc|c|sa)ss$/,
-            use: [
-                devMode ? {
-                    loader: "style-loader"
-                } :
-                {
-                    loader: MiniCssExtractPlugin.loader,
-                    options: {
-                        hmr: process.env.NODE_ENV === 'development',
-                    }
-                },
-                {
-                    loader: "css-loader", //将css转化为CommonJs模块
-                    options: {
-                        sourceMap: true
-                    }
-                },
-                {
-                    loader: "postcss-loader",
-                    options: {
-                        ident: 'postcss',
-                        sourceMap: true,
-                        plugins: (loader) => [
-                            require('autoprefixer')({
-                                browsers: ['> 0.15% in CN']
-                            }), //自动加前缀
-                        ]
+                test: /\.(sc|c|sa)ss$/,
+                use: [
+                    devMode ? {
+                        loader: "style-loader"
+                    } : {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            hmr: process.env.NODE_ENV === 'development',
+                        }
+                    },
+                    {
+                        loader: "css-loader", //将css转化为CommonJs模块
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            ident: 'postcss',
+                            sourceMap: true,
+                            plugins: (loader) => [
+                                require('autoprefixer')({
+                                    browsers: ['> 0.15% in CN']
+                                }), //自动加前缀
+                            ]
 
-                    }
-                },
-                {
-                    loader: "sass-loader", //将sass编译成css
-                    options: {
-                        sourceMap: true
-                    }
-                },
-            ]
-        }]
+                        }
+                    },
+                    {
+                        loader: "sass-loader", //将sass编译成css
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                ]
+            }
+        ]
     },
     plugins: [
         extractSass,
@@ -79,15 +103,15 @@ module.exports = {
             // minify:{
             //     removeComments:true,
             // },
-        }),//生成html的插件
+        }), //生成html的插件
     ],
     optimization: {
         minimizer: [
             new OptimizeCSSAssetsPlugin({}), //开启css压缩
             new UglifyJsPlugin({
                 cache: true,
-                parallel:true,
-                sourceMap:true
+                parallel: true,
+                sourceMap: true
             }), //开启js压缩,默认的js压缩在开启css压缩后会覆盖
         ]
     }
