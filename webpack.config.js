@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const devMode = process.env.NODE_ENV !== 'production';
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 const extractSass = new MiniCssExtractPlugin({
@@ -11,10 +11,12 @@ const extractSass = new MiniCssExtractPlugin({
     chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
 }); //设置生产环境css分离
 
+
+
 module.exports = {
     entry: './src/index.js',
     output: {
-        filename: 'bundle.js',
+        filename: 'main.[hash].js',
         path: path.resolve(__dirname, 'dist')
     },
     module: {
@@ -60,6 +62,15 @@ module.exports = {
     },
     plugins: [
         extractSass,
+        new HtmlWebpackPlugin({
+            title: 'haha-k:Output Management',
+            //  filename: 'xxx.html', //文件名
+            // template:path.resolve(__dirname,'src/main.html'),//设置模板
+            // minify:{
+            //     removeComments:true,
+            // },
+        }),//生成html的插件
+
     ],
     optimization: {
         minimizer: [
