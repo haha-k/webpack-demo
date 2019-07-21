@@ -23,13 +23,13 @@ module.exports = {
     },
     module: {
         rules: [{
-                test: /\.(png|svg|jpg|gif)$/,
+                test: /\.(png|svg|jpg|jpeg|gif)$/,
                 use: [
                     // 'file-loader',//加载图片资源
                     {
                         loader: 'url-loader',//替换file-loader,能设置一个阈值压缩base64
                         options: {
-                            limit: 420*1024
+                            limit: 8192
                         }
                     },
                     {
@@ -55,6 +55,12 @@ module.exports = {
                             }
                         }
                     }
+                ]
+            },
+            {
+                test:/\.(woff|woff2|eot|ttf|otf)$/,
+                use:[
+                    'url-loader'
                 ]
             },
             {
