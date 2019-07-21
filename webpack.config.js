@@ -25,7 +25,13 @@ module.exports = {
         rules: [{
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
-                    'file-loader',//加载图片资源
+                    // 'file-loader',//加载图片资源
+                    {
+                        loader: 'url-loader',//替换file-loader,能设置一个阈值压缩base64
+                        options: {
+                            limit: 420*1024
+                        }
+                    },
                     {
                         loader: 'image-webpack-loader', //对图片进行压缩
                         options: {
