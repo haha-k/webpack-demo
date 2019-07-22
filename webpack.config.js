@@ -17,6 +17,7 @@ const extractSass = new MiniCssExtractPlugin({
 
 module.exports = {
     entry: './src/index.js',
+    devtool: 'inline-source-map',
     output: {
         filename: 'main.[hash].js',
         path: path.resolve(__dirname, 'dist')
