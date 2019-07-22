@@ -2,6 +2,7 @@ const path = require('path');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 const webpack = require('webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 let devConfig = {
     mode: 'development',
@@ -77,6 +78,7 @@ let devConfig = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV':JSON.stringify('development')
         }),
+        new BundleAnalyzerPlugin(),
 
     ]
 };

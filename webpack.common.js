@@ -13,6 +13,9 @@ module.exports = {
         },
         extensions: [".js", ".vue", ".json"],
     },
+    externals: {
+        lodash: '_'
+    },//外部扩展
     module: {
         rules: [{
                 enforce: "pre",
