@@ -7,9 +7,14 @@ const {
 
 module.exports = {
     entry: './src/index.js',
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'src/')
+        },
+        extensions: [".js", ".vue", ".json"],
+    },
     module: {
-        rules: [
-            {
+        rules: [{
                 enforce: "pre",
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
@@ -18,8 +23,7 @@ module.exports = {
                     options: {
                         fix: true,
                     }
-                },
-            ]
+                }, ]
             },
             {
                 test: /\.m?js$/,
@@ -31,8 +35,7 @@ module.exports = {
                         plugins: ['@babel/plugin-transform-runtime'],
                         // cacheDirectory: true,
                     }
-                },
-            ]
+                }, ]
             },
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/,
