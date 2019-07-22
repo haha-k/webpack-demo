@@ -21,3 +21,8 @@ function component(){
 
 document.body.appendChild(component());
 console.log("hahak");
+
+let [a,b,c] =[1,2,3];
+console.log('a: ',a);
+console.log('b: ',b);
+console.log('c: ',c);

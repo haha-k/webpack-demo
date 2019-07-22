@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const devMode = process.env.NODE_ENV !== 'production';
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const webpack = require('webpack');
 
 const extractSass = new MiniCssExtractPlugin({
     filename: devMode ? '[name].css' : '[name].[hash].css',
@@ -59,6 +60,9 @@ let prodConfig = {
     },
     plugins: [
         extractSass,
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV':JSON.stringify('production')
+        }),
     ],
     optimization: {
         minimizer: [

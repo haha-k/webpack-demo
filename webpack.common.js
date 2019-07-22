@@ -1,12 +1,26 @@
 const path = require('path');
 // const devMode = process.env.NODE_ENV !== 'production';
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const {
+    CleanWebpackPlugin
+} = require('clean-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
     module: {
         rules: [{
+                test: /\.m?js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        plugins: ['@babel/plugin-transform-runtime'],
+                        // cacheDirectory: true,
+                    }
+                }
+            },
+            {
                 test: /\.(png|svg|jpg|jpeg|gif)$/,
                 use: [
                     // 'file-loader',//加载图片资源
@@ -57,9 +71,11 @@ module.exports = {
             title: 'haha-k:Output Management',
             //  filename: 'xxx.html', //文件名
             // template:path.resolve(__dirname,'src/main.html'),//设置模板
-            // minify:{
-            //     removeComments:true,
-            // },
+            minify: {
+                collapseWhitespace: true,
+                removeComments: true,
+                removeAttributeQuotes: true,
+            },
         }), //生成html的插件
     ]
 }

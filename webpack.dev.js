@@ -73,7 +73,11 @@ let devConfig = {
     },
     plugins :[
         new webpack.NamedModulesPlugin(),//更容易查看（patch）的依赖
-        new webpack.HotModuleReplacementPlugin() //替换插件
+        new webpack.HotModuleReplacementPlugin(), //替换插件
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV':JSON.stringify('development')
+        }),
+
     ]
 };
 
